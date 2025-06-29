@@ -13,6 +13,7 @@
     "api:generate:full": "cd ../back && poetry run python main.py & sleep 5 && cd ../front && npm run api:generate && kill %1"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-query-devtools": "^5.81.5",
     "axios": "^1.10.0",
