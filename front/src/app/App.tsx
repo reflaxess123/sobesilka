@@ -5,13 +5,15 @@ import { AudioRecorderComponent } from '../features/audio-recording/AudioRecorde
 import { ChatResponses } from '../features/chat/ChatResponses';
 import { SettingsModal } from '../features/settings/SettingsModal';
 import { QueryProvider, ThemeProvider } from './providers';
+import { ErrorBoundary } from '../shared/components';
 
 const App = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
-    <ThemeProvider>
-      <QueryProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <QueryProvider>
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
           {/* Header */}
           <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
@@ -111,8 +113,9 @@ const App = () => {
             }}
           />
         </div>
-      </QueryProvider>
-    </ThemeProvider>
+        </QueryProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };
 
