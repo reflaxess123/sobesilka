@@ -1,16 +1,6 @@
-export interface AudioRecorderConfig {
-  sampleRate: number;
-  channels: number;
-  chunkDuration: number; // in seconds
-  sendInterval: number; // in seconds
-  deviceId?: string;
-}
+import type { AudioConfig, AudioChunk } from '../types/audio';
 
-export interface AudioChunk {
-  blob: Blob;
-  timestamp: number;
-  duration: number;
-}
+export interface AudioRecorderConfig extends AudioConfig {}
 
 export class AudioRecorder {
   private mediaRecorder: MediaRecorder | null = null;
