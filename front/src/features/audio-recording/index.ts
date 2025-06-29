@@ -1,0 +1,1 @@
+export { AudioRecorderComponent } from './AudioRecorder';

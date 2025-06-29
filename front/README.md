@@ -1,15 +1,20 @@
 # Sobesilka Frontend
 
-Современный фронтенд на базе Rsbuild, React, TypeScript с автогенерацией API клиента.
+Современное React приложение с использованием Rsbuild, TailwindCSS и Feature-Sliced Design архитектуры. Проект включает автогенерацию API клиента с помощью Orval и интегрированную систему управления состоянием через TanStack Query.
 
 ## Технологии
-- **Rsbuild** - быстрый сборщик на базе Rspack
-- **React 19** + **TypeScript** - основной стек
-- **TailwindCSS** - стилизация
-- **TanStack Query** - управление состоянием сервера
-- **Orval** - автогенерация API клиента
-- **Axios** - HTTP клиент
-- **FSD Architecture** - архитектура проекта
+
+| Технология | Версия |
+|------------|--------|
+| React | ^19.1.0 |
+| TypeScript | ^5.8.3 |
+| Rsbuild | ^1.4.0 |
+| TailwindCSS | ^4.1.11 |
+| TanStack Query | ^5.81.5 |
+| Axios | ^1.10.0 |
+| Orval | ^7.10.0 |
+| ESLint | ^9.29.0 |
+| Prettier | ^3.5.3 |
 
 ## Команды
 

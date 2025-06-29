@@ -1,6 +1,7 @@
 {
-  "name": "rsbuild-react-ts",
+  "name": "speech-gpt-web-frontend",
   "version": "1.0.0",
+  "description": "Speech-GPT Web Application Frontend",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,7 +19,11 @@
     "@tanstack/react-query-devtools": "^5.81.5",
     "axios": "^1.10.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "dexie": "^4.0.9",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.479.0",
+    "clsx": "^2.1.1"
   },
   "devDependencies": {
     "@eslint/compat": "^1.3.0",
