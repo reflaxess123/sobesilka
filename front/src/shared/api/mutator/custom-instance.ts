@@ -21,7 +21,7 @@ AXIOS_INSTANCE.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Add response interceptor for error handling
@@ -34,7 +34,7 @@ AXIOS_INSTANCE.interceptors.response.use(
       console.error('Unauthorized access');
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const customInstance = <T>(

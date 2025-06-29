@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+/* CSS custom properties for dark mode support */
+:root {
+  --toast-bg: #ffffff;
+  --toast-text: #1f2937;
+  --toast-border: #e5e7eb;
+  --toast-success-bg: #059669;
+  --toast-error-bg: #DC2626;
+}
+
+.dark {
+  --toast-bg: #374151;
+  --toast-text: #f9fafb;
+  --toast-border: #4b5563;
+  --toast-success-bg: #047857;
+  --toast-error-bg: #b91c1c;
+}

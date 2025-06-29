@@ -23,22 +23,33 @@ export interface HealthResponse {
 }
 
 // Transcription API
-export const transcribeAudio = async (audioFile: File): Promise<TranscriptionResponse> => {
+export const transcribeAudio = async (
+  audioFile: File,
+): Promise<TranscriptionResponse> => {
   const formData = new FormData();
   formData.append('file', audioFile);
 
-  const response = await customInstance.post<TranscriptionResponse>('/api/transcribe', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
+  const response = await customInstance.post<TranscriptionResponse>(
+    '/api/transcribe',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     },
-  });
+  );
 
   return response.data;
 };
 
 // Chat API
-export const sendChatMessage = async (request: ChatRequest): Promise<ChatResponse> => {
-  const response = await customInstance.post<ChatResponse>('/api/chat', request);
+export const sendChatMessage = async (
+  request: ChatRequest,
+): Promise<ChatResponse> => {
+  const response = await customInstance.post<ChatResponse>(
+    '/api/chat',
+    request,
+  );
   return response.data;
 };
 

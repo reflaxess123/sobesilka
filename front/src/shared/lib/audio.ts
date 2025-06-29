@@ -46,7 +46,7 @@ export class AudioRecorder {
       };
 
       this.audioStream = await navigator.mediaDevices.getUserMedia(constraints);
-      
+
       // Create MediaRecorder with appropriate options
       const options: MediaRecorderOptions = {
         mimeType: this.getSupportedMimeType(),
@@ -179,7 +179,7 @@ export class AudioRecorder {
     this.stop();
 
     if (this.audioStream) {
-      this.audioStream.getTracks().forEach(track => track.stop());
+      this.audioStream.getTracks().forEach((track) => track.stop());
       this.audioStream = null;
     }
 
@@ -208,7 +208,7 @@ export class AudioRecorder {
 export async function getAudioDevices(): Promise<MediaDeviceInfo[]> {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
-    return devices.filter(device => device.kind === 'audioinput');
+    return devices.filter((device) => device.kind === 'audioinput');
   } catch (error) {
     console.error('Failed to get audio devices:', error);
     return [];
@@ -219,7 +219,7 @@ export async function getAudioDevices(): Promise<MediaDeviceInfo[]> {
 export async function requestMicrophonePermission(): Promise<boolean> {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    stream.getTracks().forEach(track => track.stop());
+    stream.getTracks().forEach((track) => track.stop());
     return true;
   } catch (error) {
     console.error('Microphone permission denied:', error);

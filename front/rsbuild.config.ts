@@ -8,4 +8,7 @@ export default defineConfig({
       index: './src/app/index.tsx',
     },
   },
+  html: {
+    template: './index.html',
+  },
 });

@@ -16,7 +16,9 @@ export interface WebSocketConfig {
 export class WebSocketService {
   private ws: WebSocket | null = null;
   private config: WebSocketConfig;
-  private listeners: { [key: string]: ((message: WebSocketMessage) => void)[] } = {};
+  private listeners: {
+    [key: string]: ((message: WebSocketMessage) => void)[];
+  } = {};
   private isConnected = false;
   private reconnectAttempts = 0;
   private reconnectTimer: NodeJS.Timeout | null = null;
@@ -74,7 +76,7 @@ export class WebSocketService {
 
   private handleMessage(message: WebSocketMessage): void {
     const listeners = this.listeners[message.type] || [];
-    listeners.forEach(listener => {
+    listeners.forEach((listener) => {
       try {
         listener(message);
       } catch (error) {
@@ -93,7 +95,7 @@ export class WebSocketService {
 
       this.reconnectTimer = setTimeout(() => {
         this.reconnectTimer = null;
-        this.connect().catch(error => {
+        this.connect().catch((error) => {
           console.error('Reconnection failed:', error);
         });
       }, this.config.reconnectInterval);
@@ -170,7 +172,9 @@ export class WebSocketService {
 // Create a singleton instance
 let wsService: WebSocketService | null = null;
 
-export function createWebSocketService(config: WebSocketConfig): WebSocketService {
+export function createWebSocketService(
+  config: WebSocketConfig,
+): WebSocketService {
   if (wsService) {
     wsService.disconnect();
   }

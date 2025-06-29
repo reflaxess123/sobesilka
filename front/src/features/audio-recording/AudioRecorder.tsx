@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Settings, Volume2 } from 'lucide-react';
-import { AudioRecorder, AudioChunk, getAudioDevices, requestMicrophonePermission } from '../../shared/lib/audio';
+import {
+  AudioRecorder,
+  AudioChunk,
+  getAudioDevices,
+  requestMicrophonePermission,
+} from '../../shared/lib/audio';
 import { transcribeAudio } from '../../shared/api/speech-gpt';
 import { audioDevicesService, settingsService } from '../../shared/db';
 import toast from 'react-hot-toast';
@@ -22,7 +27,7 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
   const [isInitializing, setIsInitializing] = useState(false);
   const [recordingState, setRecordingState] = useState<string>('inactive');
   const [lastTranscription, setLastTranscription] = useState<string>('');
-  
+
   const audioRecorderRef = useRef<AudioRecorder | null>(null);
 
   // Initialize audio devices and permissions
@@ -39,8 +44,10 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
           setAudioDevices(devices);
 
           // Load saved device or use default
-          const savedDevice = await settingsService.get<string>('selectedAudioDevice');
-          if (savedDevice && devices.find(d => d.deviceId === savedDevice)) {
+          const savedDevice = await settingsService.get<string>(
+            'selectedAudioDevice',
+          );
+          if (savedDevice && devices.find((d) => d.deviceId === savedDevice)) {
             setSelectedDevice(savedDevice);
           } else if (devices.length > 0) {
             setSelectedDevice(devices[0].deviceId);
@@ -48,7 +55,9 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
         }
       } catch (error) {
         console.error('Failed to initialize audio:', error);
-        toast.error('Failed to initialize audio. Please check your microphone permissions.');
+        toast.error(
+          'Failed to initialize audio. Please check your microphone permissions.',
+        );
       }
     };
 
@@ -59,7 +68,7 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
   const handleDeviceChange = async (deviceId: string) => {
     setSelectedDevice(deviceId);
     await settingsService.set('selectedAudioDevice', deviceId);
-    
+
     // If currently recording, restart with new device
     if (isRecording) {
       await stopRecording();
@@ -93,7 +102,7 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
         sampleRate: 16000,
         channels: 1,
         chunkDuration: 5, // 5 seconds
-        sendInterval: 7,  // every 7 seconds
+        sendInterval: 7, // every 7 seconds
         deviceId: selectedDevice,
       });
 
@@ -101,7 +110,7 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
 
       // Start recording with chunk handler
       await audioRecorderRef.current.start(handleAudioChunk);
-      
+
       setIsRecording(true);
       setRecordingState(audioRecorderRef.current.getRecordingState());
       toast.success('Recording started');
@@ -137,12 +146,13 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
       if (response.success && response.text.trim()) {
         setLastTranscription(response.text);
         onTranscription?.(response.text);
-        
+
         // Show toast with transcribed text (truncated)
-        const truncatedText = response.text.length > 100 
-          ? response.text.substring(0, 100) + '...' 
-          : response.text;
-        
+        const truncatedText =
+          response.text.length > 100
+            ? response.text.substring(0, 100) + '...'
+            : response.text;
+
         toast.success(`Transcribed: "${truncatedText}"`, {
           duration: 3000,
         });
@@ -177,11 +187,11 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
     <div className={clsx('flex flex-col items-center space-y-4', className)}>
       {/* Device Selection */}
       <div className="flex items-center space-x-2">
-        <Volume2 className="w-4 h-4 text-gray-600" />
+        <Volume2 className="w-4 h-4 text-gray-600 dark:text-gray-400" />
         <select
           value={selectedDevice}
           onChange={(e) => handleDeviceChange(e.target.value)}
-          className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-1 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isRecording}
         >
           <option value="" disabled>
@@ -203,11 +213,14 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
           'w-16 h-16 rounded-full flex items-center justify-center transition-all duration-200',
           'focus:outline-none focus:ring-4 focus:ring-opacity-50',
           {
-            'bg-red-500 hover:bg-red-600 focus:ring-red-300 text-white': isRecording,
-            'bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 text-white': !isRecording && hasPermission && selectedDevice,
-            'bg-gray-300 text-gray-500 cursor-not-allowed': !hasPermission || !selectedDevice,
+            'bg-red-500 hover:bg-red-600 focus:ring-red-300 text-white':
+              isRecording,
+            'bg-blue-500 hover:bg-blue-600 focus:ring-blue-300 text-white':
+              !isRecording && hasPermission && selectedDevice,
+            'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed':
+              !hasPermission || !selectedDevice,
             'animate-pulse': isInitializing,
-          }
+          },
         )}
         title={isRecording ? 'Stop recording' : 'Start recording'}
       >
@@ -222,33 +235,40 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
 
       {/* Status */}
       <div className="text-center">
-        <div className={clsx('text-sm font-medium', {
-          'text-red-600': isRecording,
-          'text-gray-600': !isRecording,
-        })}>
-          {isInitializing ? 'Initializing...' : isRecording ? 'Recording...' : 'Ready to record'}
+        <div
+          className={clsx('text-sm font-medium', {
+            'text-red-600 dark:text-red-400': isRecording,
+            'text-gray-600 dark:text-gray-400': !isRecording,
+          })}
+        >
+          {isInitializing
+            ? 'Initializing...'
+            : isRecording
+              ? 'Recording...'
+              : 'Ready to record'}
         </div>
-        
+
         {recordingState !== 'inactive' && (
-          <div className="text-xs text-gray-500">
-            State: {recordingState}
-          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">State: {recordingState}</div>
         )}
       </div>
 
       {/* Last Transcription */}
       {lastTranscription && (
-        <div className="max-w-md p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="text-xs text-blue-600 font-medium mb-1">Last transcription:</div>
-          <div className="text-sm text-blue-800">{lastTranscription}</div>
+        <div className="max-w-md p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+          <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">
+            Last transcription:
+          </div>
+          <div className="text-sm text-blue-800 dark:text-blue-300">{lastTranscription}</div>
         </div>
       )}
 
       {/* Permissions Warning */}
       {!hasPermission && (
-        <div className="max-w-md p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="text-sm text-yellow-800">
-            Microphone permission is required. Please allow access and refresh the page.
+        <div className="max-w-md p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+          <div className="text-sm text-yellow-800 dark:text-yellow-300">
+            Microphone permission is required. Please allow access and refresh
+            the page.
           </div>
         </div>
       )}

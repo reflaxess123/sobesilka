@@ -23,7 +23,7 @@ export default [
   {
     plugins: {
       'react-hooks': reactHooks,
-      'import': importPlugin,
+      import: importPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,

@@ -65,11 +65,17 @@ export const audioDevicesService = {
     // Clear all defaults
     await db.audioDevices.toCollection().modify({ isDefault: false });
     // Set new default
-    await db.audioDevices.where('deviceId').equals(deviceId).modify({ isDefault: true });
+    await db.audioDevices
+      .where('deviceId')
+      .equals(deviceId)
+      .modify({ isDefault: true });
   },
 
   async addDevice(deviceId: string, label: string): Promise<void> {
-    const existing = await db.audioDevices.where('deviceId').equals(deviceId).first();
+    const existing = await db.audioDevices
+      .where('deviceId')
+      .equals(deviceId)
+      .first();
     if (!existing) {
       await db.audioDevices.add({
         deviceId,
