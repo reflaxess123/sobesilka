@@ -24,11 +24,11 @@ export class AudioRecorder {
 
   constructor(config: AudioRecorderConfig) {
     this.config = {
-      sampleRate: 16000,
-      channels: 1,
-      chunkDuration: 5,
-      sendInterval: 7,
       ...config,
+      sampleRate: config.sampleRate ?? 16000,
+      channels: config.channels ?? 1,
+      chunkDuration: config.chunkDuration ?? 5,
+      sendInterval: config.sendInterval ?? 7,
     };
   }
 

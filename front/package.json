@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "preview": "rsbuild preview",
     "api:generate": "orval --config ./orval.config.ts",
-    "api:generate:full": "cd ../back && poetry run python main.py & sleep 5 && cd ../front && npm run api:generate && kill %1"
+    "api:generate:full": "cd ../back && start /b poetry run python main.py && timeout /t 5 /nobreak && cd ../front && npm run api:generate && taskkill /f /im python.exe"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",

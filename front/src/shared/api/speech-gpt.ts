@@ -39,7 +39,7 @@ export const transcribeAudio = async (
     },
   );
 
-  return response.data;
+  return response;
 };
 
 // Chat API
@@ -50,17 +50,17 @@ export const sendChatMessage = async (
     '/api/chat',
     request,
   );
-  return response.data;
+  return response;
 };
 
 // Health check
 export const getHealthStatus = async (): Promise<HealthResponse> => {
   const response = await customInstance.get<HealthResponse>('/health');
-  return response.data;
+  return response;
 };
 
 // Root endpoint
 export const getRootMessage = async () => {
   const response = await customInstance.get('/');
-  return response.data;
+  return response;
 };

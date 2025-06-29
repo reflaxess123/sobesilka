@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Mic, MicOff, Settings, Volume2 } from 'lucide-react';
+import clsx from 'clsx';
+import { Mic, MicOff, Volume2 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
+import { transcribeAudio } from '../../shared/api/speech-gpt';
+import { settingsService } from '../../shared/db';
 import {
   AudioRecorder,
-  AudioChunk,
   getAudioDevices,
   requestMicrophonePermission,
+  type AudioChunk,
 } from '../../shared/lib/audio';
-import { transcribeAudio } from '../../shared/api/speech-gpt';
-import { audioDevicesService, settingsService } from '../../shared/db';
-import toast from 'react-hot-toast';
-import clsx from 'clsx';
 
 interface AudioRecorderProps {
   onTranscription?: (text: string) => void;
@@ -249,7 +249,9 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
         </div>
 
         {recordingState !== 'inactive' && (
-          <div className="text-xs text-gray-500 dark:text-gray-400">State: {recordingState}</div>
+          <div className="text-xs text-gray-500 dark:text-gray-400">
+            State: {recordingState}
+          </div>
         )}
       </div>
 
@@ -259,7 +261,9 @@ export const AudioRecorderComponent: React.FC<AudioRecorderProps> = ({
           <div className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-1">
             Last transcription:
           </div>
-          <div className="text-sm text-blue-800 dark:text-blue-300">{lastTranscription}</div>
+          <div className="text-sm text-blue-800 dark:text-blue-300">
+            {lastTranscription}
+          </div>
         </div>
       )}
 

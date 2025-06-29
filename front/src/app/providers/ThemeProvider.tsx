@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from 'react';
 import { settingsService } from '../../shared/db';
 
 type Theme = 'light' | 'dark' | 'system';
@@ -25,7 +31,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
         const savedTheme = await settingsService.get<Theme>('theme', 'system');
         setThemeState(savedTheme);
       } catch (error) {
-        console.warn('Failed to load theme from settings, defaulting to system:', error);
+        console.warn(
+          'Failed to load theme from settings, defaulting to system:',
+          error,
+        );
         setThemeState('system');
       }
     };
@@ -36,7 +45,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   // Listen to system theme changes
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     const handleSystemThemeChange = (e: MediaQueryListEvent) => {
       setSystemTheme(e.matches ? 'dark' : 'light');
     };
@@ -55,7 +64,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   // Apply theme to document
   useEffect(() => {
     const effectiveTheme = theme === 'system' ? systemTheme : theme;
-    
+
     if (effectiveTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -80,9 +89,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 

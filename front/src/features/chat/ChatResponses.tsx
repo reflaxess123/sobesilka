@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, User, Bot, Trash2 } from 'lucide-react';
+import clsx from 'clsx';
+import { Bot, MessageCircle, Trash2, User } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   createWebSocketService,
   getWebSocketService,
-  WebSocketMessage,
+  type WebSocketMessage,
 } from '../../shared/lib/websocket';
-import toast from 'react-hot-toast';
-import clsx from 'clsx';
 
 interface ChatMessage {
   id: string;
@@ -139,7 +139,9 @@ export const ChatResponses: React.FC<ChatResponsesProps> = ({ className }) => {
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <div className="flex items-center space-x-2">
           <MessageCircle className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Chat History</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            Chat History
+          </h2>
           <div
             className={clsx('w-2 h-2 rounded-full', {
               'bg-green-500': connectionStatus === 'connected',

@@ -28,7 +28,10 @@ db.version(1).stores({
 
 // Settings helper functions
 export const settingsService = {
-  async get<T = any>(key: string, defaultValue?: T): Promise<T> {
+  async get<T = string | number | boolean>(
+    key: string,
+    defaultValue?: T,
+  ): Promise<T> {
     const setting = await db.settings.where('key').equals(key).first();
     return setting ? (setting.value as T) : (defaultValue as T);
   },
@@ -58,7 +61,7 @@ export const audioDevicesService = {
   },
 
   async getDefault(): Promise<AudioDevice | undefined> {
-    return await db.audioDevices.where('isDefault').equals(true).first();
+    return await db.audioDevices.where('isDefault').equals(1).first();
   },
 
   async setDefault(deviceId: string): Promise<void> {
